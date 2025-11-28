@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "694896712764",
+    "project_id": "buddy-loc",
+    "storage_bucket": "buddy-loc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694896712764:android:14110febc8c01d824e3739",
+        "android_client_info": {
+          "package_name": "com.example.buddyloc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCKI9O5okm2Mzj04Y-WN4xBn4cbTgynZs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
