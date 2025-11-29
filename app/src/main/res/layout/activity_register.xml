@@ -105,9 +105,10 @@
         android:text="Have an account? Login"
         android:textSize="15.sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.601"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="636dp" />
+        tools:layout_editor_absoluteY="436dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
