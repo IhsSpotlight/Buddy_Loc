@@ -7,5 +7,4 @@
         android:title="logout"
         android:icon="@drawable/logout"/>
 
-
 </menu>
