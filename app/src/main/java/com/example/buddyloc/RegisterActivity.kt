@@ -35,7 +35,7 @@ class RegisterActivity : AppCompatActivity() {
         buttonRegister = findViewById(R.id.Registerbtn)
         editTextEmail = findViewById(R.id.emailet)
         editTextPassword = findViewById(R.id.passet)
-        editTextDisplayName = findViewById(R.id.displaynameTXT)
+        editTextDisplayName = findViewById(R.id.emailet0)
         editTextConPassword = findViewById(R.id.conpasset)
         textViewLogin = findViewById(R.id.alreadyhaveacc)
 
