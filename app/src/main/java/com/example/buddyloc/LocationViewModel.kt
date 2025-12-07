@@ -1,4 +1,4 @@
-package org.freedu.locationsharingapp
+package com.example.buddyloc
 
 import android.Manifest
 import android.content.pm.PackageManager

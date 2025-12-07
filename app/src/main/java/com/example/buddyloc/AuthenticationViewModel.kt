@@ -1,19 +1,21 @@
 package com.example.buddyloc
 
+import androidx.lifecycle.ViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-class AuthenticationViewModel {
+class AuthenticationViewModel: ViewModel() {
     private val firebaseAuth = FirebaseAuth.getInstance()
     fun login(email: String, password: String, OnSuccess: () -> Unit, OnFailure: (String) -> Unit) {
-        firebaseAuth.signInWithEmailAndPassword(email,password)
+        firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
-        if (task.isSuccessful) {
-            OnSuccess()
-        } else {
-            OnFailure(task.exception?.message ?: "Login Failed")
-        }
+                if (task.isSuccessful) {
+                    OnSuccess()
+                } else {
+                    OnFailure(task.exception?.message ?: "Login Failed")
+                }
+            }
     }
         fun register(email: String, password: String, OnSuccess: () -> Unit, OnFailure: (String) -> Unit) {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -38,8 +40,3 @@ class AuthenticationViewModel {
 
 
     }
-
-
-
-
-}
