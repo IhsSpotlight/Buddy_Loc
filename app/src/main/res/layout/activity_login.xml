@@ -78,27 +78,15 @@
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/forgetpasswordbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="#456882"
-        android:text="forgot password"
-        android:textSize="15.sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginbtn" />
-
-    <Button
         android:id="@+id/createacc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:backgroundTint="#456882"
         android:text="Don't have an account? Create one"
         android:textSize="15.sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgetpasswordbtn" />
+        tools:layout_editor_absoluteY="485dp"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

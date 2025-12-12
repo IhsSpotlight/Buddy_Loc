@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+    id("com.google.firebase.crashlytics")
+
 }
 
 android {
@@ -58,14 +60,28 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.play.services.location)
+    implementation("com.google.firebase:firebase-auth")
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.10.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.10.0")
 
     implementation("androidx.fragment:fragment-ktx:1.8.9")
-    implementation("androidx.fragment:fragment-testing:1.8.9")
+    debugImplementation("androidx.fragment:fragment-testing:1.8.9")
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+
+
+        // Import the BoM for the Firebase platform
+        implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
+
+        // Add the dependencies for the Crashlytics and Analytics libraries
+        // When using the BoM, you don't specify versions in Firebase library dependencies
+        implementation("com.google.firebase:firebase-crashlytics")
+        implementation("com.google.firebase:firebase-analytics")
+
+
 
 }
