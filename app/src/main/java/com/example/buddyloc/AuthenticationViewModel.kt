@@ -1,42 +1,41 @@
 package com.example.buddyloc
 
 import androidx.lifecycle.ViewModel
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-class AuthenticationViewModel: ViewModel() {
+class AuthenticationViewModel : ViewModel() {
+
     private val firebaseAuth = FirebaseAuth.getInstance()
-    fun login(email: String, password: String, OnSuccess: () -> Unit, OnFailure: (String) -> Unit) {
+
+    fun login(email: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    OnSuccess()
+                    onSuccess()
                 } else {
-                    OnFailure(task.exception?.message ?: "Login Failed")
+                    onFailure(task.exception?.message ?: "Login failed.")
                 }
             }
     }
-        fun register(email: String, password: String, OnSuccess: () -> Unit, OnFailure: (String) -> Unit) {
-            firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        OnSuccess()
-                    } else {
-                        OnFailure(task.exception?.message ?: "Registration Failed")
-                    }
+
+    fun register(email: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    onSuccess()
+                } else {
+                    onFailure(task.exception?.message ?: "Registration failed.")
                 }
-        }
-        fun getCurrentUserID(): String {
-            return firebaseAuth.currentUser?. uid ?:""
-        }
-        fun isLoggedin(): Boolean {
-            return firebaseAuth.currentUser != null
-        }
-       fun getCurrentUser(): FirebaseUser? {
-            return firebaseAuth.currentUser
-        }
-
-
-
+            }
     }
+    fun getCurrentUserId(): String {
+        return firebaseAuth.currentUser?.uid ?: ""
+    }
+    fun isLoggedIn(): Boolean {
+        return firebaseAuth.currentUser != null
+    }
+    fun getCurrentUser(): FirebaseUser? {
+        return firebaseAuth.currentUser
+    }
+}

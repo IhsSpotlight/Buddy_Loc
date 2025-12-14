@@ -4,6 +4,7 @@ import com.google.firebase.firestore.PropertyName
 
 data class User(
     val UserID: String = "",
+
     @get:PropertyName("displayname")
     @set:PropertyName("displayname")
     var DisplayName: String = "",
@@ -12,10 +13,13 @@ data class User(
     @set:PropertyName("email")
     var Email: String = "",
 
-    @get:PropertyName("location")
-    @set:PropertyName("location")
-    var Location: String = ""
-)
-{
-    constructor(UserID: String) : this(UserID, "", "", "")
+    @get:PropertyName("latitude")
+    @set:PropertyName("latitude")
+    var latitude: Double? = null,
+
+    @get:PropertyName("longitude")
+    @set:PropertyName("longitude")
+    var longitude: Double? = null
+) {
+    constructor(UserID: String) : this(UserID, "", "", null, null)
 }
