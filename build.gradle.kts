@@ -4,4 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.google.gms.google.services) apply false
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin) apply false
+    id("com.google.firebase.crashlytics") version "3.0.6" apply false
+
+
 }
