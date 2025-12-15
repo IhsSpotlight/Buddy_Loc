@@ -1,5 +1,6 @@
 package com.example.buddyloc
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,9 +32,10 @@ class UserAdapter(private var userList: List<User>) : RecyclerView.Adapter<UserA
         val displayNameTxt = itemView.findViewById<TextView>(R.id.displaynameTXT)
         val emailTxt = itemView.findViewById<TextView>(R.id.emailTXT)
         val locationTxt = itemView.findViewById<TextView>(R.id.LocationTXT)
+        @SuppressLint("SetTextI18n")
         fun bind(user: User) {
-            displayNameTxt.text = user.DisplayName
-            emailTxt.text = user.Email
+            displayNameTxt.text = user.displayName
+            emailTxt.text = user.email
             locationTxt.text = user.latitude.toString() + ", " + user.longitude.toString()
 
 

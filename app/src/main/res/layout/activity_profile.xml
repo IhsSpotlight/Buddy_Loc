@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textinputed4"
+            android:id="@+id/emmailedtxt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Enter your email">
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="@+id/textinputlayout4">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textinputed5"
+            android:id="@+id/nameedtxt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Enter your name"
@@ -66,7 +66,7 @@
         app:layout_constraintTop_toTopOf="@+id/textinputlayout5">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textinputed6"
+            android:id="@+id/locationedtxt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Enter your name"
