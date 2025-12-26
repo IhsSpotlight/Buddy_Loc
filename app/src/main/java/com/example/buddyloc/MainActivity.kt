@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.PopupMenu
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -82,8 +83,7 @@ class MainActivity : AppCompatActivity() {
 
         // Location button
         locationBtn = findViewById(R.id.locationBtn)
-        locationBtn.setOnClickListener {
-
+        locationBtn.setOnClickListener { view ->
             if (ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.ACCESS_FINE_LOCATION
@@ -92,16 +92,44 @@ class MainActivity : AppCompatActivity() {
                 requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
                 return@setOnClickListener
             }
+            val popup = PopupMenu(this, view)
+            popup.menuInflater.inflate(
+                R.menu.location_buttonmenu,
+                popup.menu
+            ) // We'll create this menu XML
+            popup.setOnMenuItemClickListener { item: MenuItem ->
+                when (item.itemId) {
+                    R.id.menu_map -> {
 
-            locationViewModel.getLastLocation { location ->
-                location?.let {
-                    val intent = Intent(this, MapsActivity::class.java)
-                    intent.putExtra("lat", it.latitude)
-                    intent.putExtra("lng", it.longitude)
-                    startActivity(intent)
+                        locationViewModel.getLastLocation { location ->
+                            location?.let {
+                                val intent = Intent(this, MapsActivity::class.java)
+                                intent.putExtra("lat", it.latitude)
+                                intent.putExtra("lng", it.longitude)
+                                startActivity(intent)
+                            }
+                        }
+                        true
+                    }
+
+                    R.id.menu_profile -> {
+                        startActivity(Intent(this, ProfileActivity::class.java))
+                        true
+                    }
+
+                    R.id.menu_logout -> {
+                        Firebase.auth.signOut()
+                        startActivity(Intent(this, LoginActivity::class.java))
+                        finish()
+                        true
+                    }
+
+                    else -> false
                 }
             }
+            popup.show()
         }
+
 
 
         // Permission check
