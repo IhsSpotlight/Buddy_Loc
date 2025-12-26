@@ -1,10 +1,12 @@
 package com.example.buddyloc
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -82,15 +84,26 @@ class MainActivity : AppCompatActivity() {
         // Location button
         locationBtn = findViewById(R.id.locationBtn)
         locationBtn.setOnClickListener {
+
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                return@setOnClickListener
+            }
+
             locationViewModel.getLastLocation { location ->
-                if (location != null) {
+                location?.let {
                     val intent = Intent(this, MapsActivity::class.java)
-                    intent.putExtra("lat", location.latitude)
-                    intent.putExtra("lng", location.longitude)
+                    intent.putExtra("lat", it.latitude)
+                    intent.putExtra("lng", it.longitude)
                     startActivity(intent)
                 }
             }
         }
+
 
         // Permission check
         if (ContextCompat.checkSelfPermission(
@@ -122,18 +135,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getLocation() {
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) return
+
         locationViewModel.getLastLocation { location ->
-            if (location != null) {
+            location?.let {
                 authViewModel.getCurrentUserId()?.let { userId ->
                     firestoreViewModel.updateUserLocation(
                         userId,
-                        location.latitude,
-                        location.longitude
+                        it.latitude,
+                        it.longitude
                     )
                 }
             }
         }
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {

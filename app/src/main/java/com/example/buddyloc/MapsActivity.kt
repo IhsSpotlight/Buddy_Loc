@@ -22,7 +22,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
 
-        // ✅ Receive MY location
         myLat = intent.getDoubleExtra("lat", 0.0)
         myLng = intent.getDoubleExtra("lng", 0.0)
 
@@ -37,28 +36,29 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         googleMap = map
         googleMap.clear()
 
-        val boundsBuilder = LatLngBounds.Builder()
+        if (myLat == 0.0 || myLng == 0.0) return
 
-        // 🔵 MY location (BLUE marker)
-        if (myLat != 0.0 && myLng != 0.0) {
-            val myLocation = LatLng(myLat, myLng)
+        val myLocation = LatLng(myLat, myLng)
 
-            googleMap.addMarker(
-                MarkerOptions()
-                    .position(myLocation)
-                    .title("You are here")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-            )
+        // 🔵 My marker
+        googleMap.addMarker(
+            MarkerOptions()
+                .position(myLocation)
+                .title("You are here")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+        )
 
-            boundsBuilder.include(myLocation)
-        }
+        // 🎯 Move camera immediately to MY location
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15f))
 
-        // 🔴 OTHER users (REAL-TIME)
+        // 🔴 Listen to other users
         firestoreViewModel.listenToUsers { userList ->
+
             googleMap.clear()
 
-            // Add MY marker again
-            val myLocation = LatLng(myLat, myLng)
+            val boundsBuilder = LatLngBounds.Builder()
+
+            // Add my marker again
             googleMap.addMarker(
                 MarkerOptions()
                     .position(myLocation)
@@ -73,11 +73,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val lng = user.longitude
 
                 if (lat != null && lng != null && lat != 0.0 && lng != 0.0) {
+
                     val userLocation = LatLng(lat, lng)
 
-                    val distance = calculateDistance(
-                        myLat, myLng, lat, lng
-                    )
+                    val distance = calculateDistance(myLat, myLng, lat, lng)
 
                     googleMap.addMarker(
                         MarkerOptions()
@@ -91,21 +90,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
 
-            // 📍 Auto zoom to show ALL users
+            // 📍 Auto zoom to show all markers
             val bounds = boundsBuilder.build()
             googleMap.animateCamera(
-                CameraUpdateFactory.newLatLngBounds(bounds, 100)
+                CameraUpdateFactory.newLatLngBounds(bounds, 120)
             )
         }
     }
 
-    // 📏 Distance calculation (Haversine formula)
     private fun calculateDistance(
         lat1: Double, lon1: Double,
         lat2: Double, lon2: Double
     ): Double {
 
-        val earthRadius = 6371.0 // KM
+        val earthRadius = 6371.0
         val dLat = Math.toRadians(lat2 - lat1)
         val dLon = Math.toRadians(lon2 - lon1)
 

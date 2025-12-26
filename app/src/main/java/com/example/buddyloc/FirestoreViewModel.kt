@@ -103,4 +103,22 @@ class FirestoreViewModel : ViewModel() {
         super.onCleared()
         usersListener?.remove()
     }
+
+    fun updateUserProfile(
+        userId: String,
+        displayName: String,
+        latitude: Double,
+        longitude: Double
+    ) {
+        if (userId.isEmpty()) return
+
+        val updates = hashMapOf<String, Any>(
+            "displayName" to displayName,
+            "latitude" to latitude,
+            "longitude" to longitude
+        )
+
+        usersCollection.document(userId)
+            .update(updates)
+    }
 }

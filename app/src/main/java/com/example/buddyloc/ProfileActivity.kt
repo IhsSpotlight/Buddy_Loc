@@ -1,6 +1,5 @@
 package com.example.buddyloc
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.*
@@ -21,11 +20,10 @@ class ProfileActivity : AppCompatActivity() {
 
     private val firebaseAuth = FirebaseAuth.getInstance()
 
-    // ✅ Current location (should be set via GPS)
-    private var currentLat: Double = 0.0
-    private var currentLng: Double = 0.0
+    // ✅ Location (TEMP values – replace with GPS later)
+    private var currentLat: Double = 23.8103   // Dhaka
+    private var currentLng: Double = 90.4125   // Dhaka
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -33,8 +31,8 @@ class ProfileActivity : AppCompatActivity() {
         updateBtn = findViewById(R.id.button)
         homeBtn = findViewById(R.id.homebtn)
         logoutBtn = findViewById(R.id.logoutbtn)
-        emailEt = findViewById(R.id.emailTXT)
-        nameEt = findViewById(R.id.displaynameTXT)
+        emailEt = findViewById(R.id.emmailedtxt)
+        nameEt = findViewById(R.id.nameedtxt)
 
         authViewModel = ViewModelProvider(this)[AuthenticationViewModel::class.java]
         firestoreViewModel = ViewModelProvider(this)[FirestoreViewModel::class.java]
@@ -71,28 +69,20 @@ class ProfileActivity : AppCompatActivity() {
 
         firestoreViewModel.listenToUsers { users ->
             val user = users.find { it.userId == currentUser.uid } ?: return@listenToUsers
-
-            nameEt.setText(user.displayName)
-            currentLat = user.latitude ?: 0.0
-            currentLng = user.longitude ?: 0.0
+            nameEt.setText(user.displayName ?: "")
         }
     }
 
     private fun updateProfile(newName: String) {
         val currentUser = authViewModel.getCurrentUser() ?: return
 
-        // ⚠ Replace this with GPS update
-        if (currentLat == 0.0 || currentLng == 0.0) {
-            Toast.makeText(this, "Location not available", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        firestoreViewModel.updateUserLocation(
-            currentUser.uid,
-            currentLat,
-            currentLng
+        firestoreViewModel.updateUserProfile(
+            userId = currentUser.uid,
+            displayName = newName,
+            latitude = currentLat,
+            longitude = currentLng
         )
 
-        Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Profile updated & location saved", Toast.LENGTH_SHORT).show()
     }
 }
