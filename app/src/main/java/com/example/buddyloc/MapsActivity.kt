@@ -91,10 +91,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
 
             // 📍 Auto zoom to show all markers
-            val bounds = boundsBuilder.build()
-            googleMap.animateCamera(
-                CameraUpdateFactory.newLatLngBounds(bounds, 120)
-            )
+            /**val bounds = boundsBuilder.build()
+            googleMap.setOnMapLoadedCallback {
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 120))
+            }**/
         }
     }
 

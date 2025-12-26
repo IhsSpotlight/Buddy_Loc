@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -144,7 +143,7 @@ class MainActivity : AppCompatActivity() {
 
         locationViewModel.getLastLocation { location ->
             location?.let {
-                authViewModel.getCurrentUserId()?.let { userId ->
+                authViewModel.getCurrentUserId().let { userId ->
                     firestoreViewModel.updateUserLocation(
                         userId,
                         it.latitude,
